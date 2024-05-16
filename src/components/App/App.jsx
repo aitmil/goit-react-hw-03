@@ -13,15 +13,24 @@ export default function App() {
   ];
 
   const [contacts, setContacts] = useState(initialContacts);
+  const [filter, setFilter] = useState("");
 
-  const handleDelete = () => {};
+  const handleDelete = (contactId) => {
+    setContacts((renderedContacts) => {
+      return renderedContacts.filter((contact) => contact.id !== contactId);
+    });
+  };
+
+  const filteredContacts = contacts.filter((contact) =>
+    contact.name.toLowerCase().includes(filter.toLowerCase())
+  );
 
   return (
     <div className={css.container}>
       <h1 className={css.title}>Phonebook</h1>
       <ContactForm />
-      <SearchBox />
-      <ContactList onDelete={handleDelete} contacts={contacts} />
+      <SearchBox value={filter} onFilter={setFilter} />
+      <ContactList onDelete={handleDelete} contacts={filteredContacts} />
     </div>
   );
 }
