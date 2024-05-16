@@ -15,6 +15,12 @@ export default function App() {
   const [contacts, setContacts] = useState(initialContacts);
   const [filter, setFilter] = useState("");
 
+  const handleAddContact = (newContact) => {
+    setContacts((renderedContacts) => {
+      return [...renderedContacts, newContact];
+    });
+  };
+
   const handleDelete = (contactId) => {
     setContacts((renderedContacts) => {
       return renderedContacts.filter((contact) => contact.id !== contactId);
@@ -28,7 +34,7 @@ export default function App() {
   return (
     <div className={css.container}>
       <h1 className={css.title}>Phonebook</h1>
-      <ContactForm />
+      <ContactForm onAdd={handleAddContact} />
       <SearchBox value={filter} onFilter={setFilter} />
       <ContactList onDelete={handleDelete} contacts={filteredContacts} />
     </div>
